@@ -13,7 +13,7 @@ import { RedisModule } from '@liaoliaots/nestjs-redis';
 import { HttpExceptionFilter } from './exception-filter/http-exception/httpExceptionFilter';
 import { RedisConfig, TypeOrmConfig } from './config';
 import { ApiConfig } from './config';
-import { HttpLoggingInterceptor } from './interceptor/HttpLoggingInterceptor';
+import { HttpLoggingInterceptor } from './interceptors/HttpLoggingInterceptor';
 const providers: Provider[] = [
   {
     provide: APP_FILTER,

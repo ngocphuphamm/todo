@@ -1,10 +1,13 @@
 import {
   Controller,
+  HttpCode,
   Get,
   Post,
+  HttpStatus,
   Body,
   Patch,
   Param,
+  UseGuards,
   Delete,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
@@ -13,10 +16,14 @@ import { AuthService } from './auth.service';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  // @Post()
-  // create(@Body() createAuthDto: CreateAuthDto) {
-  //   return this.authService.create(createAuthDto);
-  // }
+  @Post('register')
+  @HttpCode(HttpStatus.OK)
+  public async createAccount(
+    @Body() body: CreateUser
+  ): Promise<CoreApiResponse<ResponseUserBody>> {
+
+  }
+
 
   // @Get()
   // findAll() {
