@@ -1,10 +1,33 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 
+import { UserDto } from './dto';
+import { UserRepository } from './auth.repository';
+import { User } from './entities/user.entity';
+import { CoreAssert } from '../../common/utils/assert';
+import { Exception } from '../../common/exception';
+import { Code } from '../../common/code';
 @Injectable()
 export class AuthService {
-  // create(createAuthDto: CreateAuthDto) {
-  //   return 'This action adds a new auth';
-  // }
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: UserRepository,
+  ) {}
+
+  async create(newUser: UserDto): Promise<string> {
+    const doesUserExist = await this.userRepository.countUsers({
+      email: newUser.email,
+    });
+    CoreAssert.isFalse(
+      !!doesUserExist,
+      Exception.new({
+        code: Code.ENTITY_ALREADY_EXISTS_ERROR,
+        overrideMessage: 'User already exists',
+      }),
+    );
+
+    return await this.userRepository.addUser(newUser);
+  }
 
   // findAll() {
   //   return `This action returns all auth`;

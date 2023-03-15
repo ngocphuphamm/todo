@@ -10,7 +10,7 @@ import { RateLimiterModule, RateLimiterGuard } from 'nestjs-rate-limiter';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RedisModule } from '@liaoliaots/nestjs-redis';
 
-import { HttpExceptionFilter } from './exception-filter/http-exception/httpExceptionFilter';
+import { HttpExceptionFilter } from './exceptionFilter/httpException/httpExceptionFilter';
 import { RedisConfig, TypeOrmConfig } from './config';
 import { ApiConfig } from './config';
 import { HttpLoggingInterceptor } from './interceptors/HttpLoggingInterceptor';

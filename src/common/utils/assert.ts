@@ -1,7 +1,6 @@
 import { Nullable, Optional } from '../types';
 
 export class CoreAssert {
-
   public static isTrue(expression: boolean, exception: Error): void {
     if (!expression) {
       throw exception;
@@ -20,5 +19,4 @@ export class CoreAssert {
     }
     return value;
   }
-
 }

@@ -5,7 +5,4 @@
   "username": "root",
   "password": "root",
   "database": "todolist",
-  "cli": {
-    "migrationsDir": "src/infrastructure/adapter/persistence/typeorm/migration"
-  }
 }

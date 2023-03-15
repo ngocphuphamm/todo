@@ -9,9 +9,12 @@ import {
   Param,
   UseGuards,
   Delete,
+  ValidationPipe,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 
+import { CoreApiResponse } from 'src/common/apiResponse';
+import { UserDto } from './dto';
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -19,11 +22,11 @@ export class AuthController {
   @Post('register')
   @HttpCode(HttpStatus.OK)
   public async createAccount(
-    @Body() body: CreateUser
-  ): Promise<CoreApiResponse<ResponseUserBody>> {
-
+    @Body(ValidationPipe) user: UserDto,
+  ): Promise<CoreApiResponse<string>> {
+    const newUserId = await this.authService.create(user);
+    return CoreApiResponse.success(newUserId);
   }
-
 
   // @Get()
   // findAll() {
