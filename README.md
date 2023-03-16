@@ -1,4 +1,42 @@
-.
+# To Do List
+
+## DEMO
+https://elements.getpostman.com/redirect?entityId=17665982-369b7ba9-57d6-4b70-8569-683aa814d828&entityType=collection
+
+http://194.163.180.21/documentation/
+
+## Running
+
+```
+Start application - npm run start
+
+Expose ./env/local.app.env and start application - npm run start:local
+
+API documentation will be available on the endpoint GET http://localhost:3002/documentation
+
+OR 
+
+ACCESS 
+http://194.163.180.21/api/
+http://194.163.180.21/documentation
+```
+## Database
+
+### MySql
+![335956412_886576025760498_5589930675801656828_n](https://user-images.githubusercontent.com/87811387/224975091-cafffcaa-bda7-4a35-a36b-29663fbd4314.png)
+
+![336019315_2333863846795026_6530746572192490288_n](https://user-images.githubusercontent.com/87811387/224975100-055f38cb-17b5-4239-88c7-c0b1f729245e.png)
+
+
+### Redis
+![336209303_594737415581906_8434204677259970474_n](https://user-images.githubusercontent.com/87811387/224975905-bada3c66-41c6-4426-97f9-9015e56beca1.png)
+
+
+
+
+### Structure 
+```
+
 ├── common
 │   ├── apiResponse
 │   │   ├── coreResponse.ts
@@ -105,3 +143,4 @@
         ├── todos.service.spec.ts
         └── todos.service.ts
 
+```
