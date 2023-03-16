@@ -1,4 +1,4 @@
-import { ServerApplication } from './server';
+import { ServerApplication } from './loaders/server';
 
 (async (): Promise<void> => {
   await runApplication();

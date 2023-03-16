@@ -1,20 +1,24 @@
 import {
   Controller,
   HttpCode,
-  Get,
   Post,
   HttpStatus,
   Body,
-  Patch,
-  Param,
   UseGuards,
-  Delete,
-  ValidationPipe,
+  Req,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 
-import { CoreApiResponse } from 'src/common/apiResponse';
-import { UserDto } from './dto';
+import { CoreApiResponse } from '../../common/apiResponse';
+import { CreateUserDto } from './dto';
+import { JwtPayload } from './interface/payloads/jwt.payload';
+import { RequestWithUser } from './interface/requests/requestUser.request';
+import { LoggedInUser } from './interface/payloads/user.payload';
+import { ResponseLogout } from './interface/responses/reponseLogout.response';
+import { RefreshTokenDto } from './dto';
+import { JwtAuthGuard, ApiKeyAuthGuard, LocalAuthGuard } from '../../guard';
+
+@UseGuards(ApiKeyAuthGuard)
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -22,29 +26,41 @@ export class AuthController {
   @Post('register')
   @HttpCode(HttpStatus.OK)
   public async createAccount(
-    @Body(ValidationPipe) user: UserDto,
-  ): Promise<CoreApiResponse<string>> {
-    const newUserId = await this.authService.create(user);
-    return CoreApiResponse.success(newUserId);
+    @Body() user: CreateUserDto,
+  ): Promise<CoreApiResponse<JwtPayload>> {
+    const newUser = await this.authService.create(user);
+    return CoreApiResponse.success(newUser);
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.authService.findAll();
-  // }
+  @Post()
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(LocalAuthGuard)
+  public async login(
+    @Req() req: RequestWithUser,
+  ): Promise<CoreApiResponse<LoggedInUser>> {
+    const data: LoggedInUser = await this.authService.login(req.user);
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.authService.findOne(+id);
-  // }
+    return CoreApiResponse.success(data);
+  }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-  //   return this.authService.update(+id, updateAuthDto);
-  // }
+  @Post('refreshToken')
+  @HttpCode(HttpStatus.OK)
+  public async refreshToken(
+    @Body() body: RefreshTokenDto,
+  ): Promise<CoreApiResponse<string>> {
+    const data: string = await this.authService.refreshToken(body.refreshToken);
+    return CoreApiResponse.success(data);
+  }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.authService.remove(+id);
-  // }
+  @Post('logout')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
+  public async logout(
+    @Body() body: RefreshTokenDto,
+  ): Promise<CoreApiResponse<ResponseLogout>> {
+    await this.authService.logout(body.refreshToken);
+    return CoreApiResponse.success({
+      description: 'Logout successfully',
+    });
+  }
 }

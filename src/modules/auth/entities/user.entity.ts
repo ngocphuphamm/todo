@@ -1,7 +1,8 @@
 import { Column, Entity, PrimaryColumn, BaseEntity } from 'typeorm';
+import { compare } from 'bcryptjs';
 
-@Entity({ name: 'user' })
-export class User extends BaseEntity {
+@Entity({ name: 'users' })
+export default class User extends BaseEntity {
   @PrimaryColumn({ length: 36 })
   id: string;
 
@@ -19,4 +20,8 @@ export class User extends BaseEntity {
 
   @Column()
   updatedAt: Date;
+
+  public async comparePassword(password: string): Promise<boolean> {
+    return compare(password, this.password);
+  }
 }
