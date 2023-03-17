@@ -7,7 +7,10 @@ import { Exception } from '../../../common/exception';
 import { CoreAssert } from '../../../common/utils/assert';
 import { Permissions, StatusKey } from '../../../enums/apiKey.enum';
 import { AuthService } from '../auth.service';
-import { API_KEY_HEADER, API_KEY_PREFIX } from '../../../constants/apiKey';
+import {
+  API_KEY_HEADER,
+  API_KEY_PREFIX,
+} from '../../../common/constants/apiKey';
 import { ApiKey } from '../entities';
 
 @Injectable()

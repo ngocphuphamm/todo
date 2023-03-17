@@ -7,18 +7,19 @@ import {
 } from '@liaoliaots/nestjs-redis';
 import Redis from 'ioredis';
 
-import { CreateUserDto } from './dto';
+import { CreateUserDto } from './dtos';
 import { UserRepository, ApiKeyRepository } from './repository';
 import { User } from './entities';
 import { CoreAssert } from '../../common/utils/assert';
 import { Exception } from '../../common/exception';
 import { Code } from '../../common/code';
 import { Optional, Nullable } from '../../common/types';
-import { JwtPayload } from './interface/payloads/jwt.payload';
-import { UserPayload } from './interface/payloads/user.payload';
-import { LoggedInUser } from './interface/payloads/user.payload';
-import { TIME_TO_LIVE_REDIS } from '../../constants/redis';
+import { JwtPayload } from './interfaces/payloads/jwt.payload';
+import { UserPayload } from './interfaces/payloads/user.payload';
+import { LoggedInUser } from './interfaces/payloads/user.payload';
+import { TIME_TO_LIVE_REDIS } from '../../common/constants/redis';
 import { ApiKey } from './entities';
+import { ApiConfig } from 'src/config';
 
 @Injectable()
 export class AuthService {
@@ -80,7 +81,7 @@ export class AuthService {
   }
 
   public async refreshToken(refreshToken: string): Promise<string> {
-    const verifiedJWt = await this.jwtService.verify(refreshToken);
+    const verifiedJWt = await this.verifyRefreshToken(refreshToken);
     await CoreAssert.isTrue(
       verifiedJWt,
       Exception.new({
@@ -155,9 +156,9 @@ export class AuthService {
       username: user.username,
     };
     const accessToken = await this.jwtService.sign(payload);
-    const refreshToken = await this.jwtService.sign(payload, {
-      expiresIn: '7d',
-    });
+
+    const refreshToken = await this.signRefreshToken(payload);
+
     // Store the refresh token in Redis
     await this.redis.set(refreshToken, user.id, 'PX', TIME_TO_LIVE_REDIS);
     return [accessToken, refreshToken];
@@ -172,5 +173,25 @@ export class AuthService {
       });
     }
     return false;
+  }
+
+  private async signRefreshToken(payload: JwtPayload): Promise<string> {
+    const secret = ApiConfig.ACCESS_REFRESH_TOKEN_SECRET;
+    const expiresRefreshToken = Number(
+      ApiConfig.ACCESS_REFRESH_TOKEN_SECRET_IN_DAYS,
+    );
+    const refreshToken = await this.jwtService.sign(payload, {
+      expiresIn: `${expiresRefreshToken}d`,
+      secret,
+    });
+    return refreshToken;
+  }
+
+  private async verifyRefreshToken(token: string): Promise<any> {
+    const secret = ApiConfig.ACCESS_REFRESH_TOKEN_SECRET;
+    const userPayload: JwtPayload = this.jwtService.verify(token, {
+      secret,
+    });
+    return userPayload ? true : false;
   }
 }

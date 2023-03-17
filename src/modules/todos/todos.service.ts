@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { TodoDto, PaginationParam } from './dto';
-import { UserPayload } from '../auth/interface/payloads/user.payload';
+import { UserPayload } from '../auth/interfaces/payloads/user.payload';
 import TodoRepository from './repository/todo.repository';
 import { Todo } from './entities';
-import { PAGINATION_PAGE, PAGINATION_SIZE } from '../../constants/pagination';
+import { PAGINATION_PAGE, PAGINATION_SIZE } from '../../common/constants/pagination';
 import { TodoListPagination } from './interface/response/TodoListPagination';
 import { CoreAssert } from '../../common/utils/assert';
 import { Exception } from '../../common/exception';
@@ -47,7 +47,7 @@ export class TodosService {
         limit: limit,
         sumPage: sum > 0 ? sum : 1,
       },
-      listToDo: todos,
+      listTodo: todos,
     };
   }
 

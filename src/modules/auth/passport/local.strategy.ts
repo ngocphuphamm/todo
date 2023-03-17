@@ -1,5 +1,5 @@
 import { AuthService } from '../auth.service';
-import { UserPayload } from '../interface/payloads/user.payload';
+import { UserPayload } from '../interfaces/payloads/user.payload';
 import { Code } from '../../../common/code';
 import { Exception } from '../../../common/exception';
 import { CoreAssert } from '../../../common/utils/assert';

@@ -11,7 +11,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { RedisModule } from '@liaoliaots/nestjs-redis';
 
 import { HttpExceptionFilter } from '../../exceptionFilter';
-import { RedisConfig, TypeOrmConfig, ApiConfig } from '../../config';
+import {
+  RedisConfig,
+  TypeOrmConfig,
+  ApiConfig,
+  RateLimitConfig,
+} from '../../config';
 import { HttpLoggingInterceptor } from '../../interceptors';
 const providers: Provider[] = [
   {
@@ -34,7 +39,7 @@ if (ApiConfig.LOG_ENABLE) {
 @Global()
 @Module({
   imports: [
-    RateLimiterModule.register(),
+    RateLimiterModule.register(RateLimitConfig),
     TypeOrmModule.forRoot(TypeOrmConfig),
     RedisModule.forRoot({
       readyLog: true,

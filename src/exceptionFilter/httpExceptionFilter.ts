@@ -38,11 +38,19 @@ export default class HttpExceptionFilter implements ExceptionFilter {
     error: Error,
     errorResponse: CoreApiResponse<unknown>,
   ): CoreApiResponse<unknown> {
+    interface ErrorResponse {
+      statusCode: number;
+      message: string[] | string;
+      error: string;
+    }
     if (error instanceof HttpException) {
-      console.log(error);
+      const errorRe = error.getResponse() as ErrorResponse;
+      const errorMessage = Array.isArray(errorRe.message)
+        ? errorRe.message[0]
+        : error.message;
       errorResponse = CoreApiResponse.error(
         error.getStatus(),
-        error.message,
+        errorMessage,
         null,
       );
     }

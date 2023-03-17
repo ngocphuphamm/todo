@@ -5,34 +5,54 @@ import {
   Get,
   HttpCode,
   HttpStatus,
-  Inject,
   Param,
   Post,
   Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiTags,
+  ApiSecurity,
+  ApiBody,
+  ApiResponse,
+  ApiQuery,
+} from '@nestjs/swagger';
 
 import { TodosService } from './todos.service';
 import { TodoDto, PaginationParam } from './dto';
 import { HttpUser } from '../../decorators/httpUser';
-import { UserPayload } from '../auth/interface/payloads/user.payload';
-import JwtAuthGuard from '../../guard/jwt.guard';
+import { UserPayload } from '../auth/interfaces/payloads/user.payload';
+import JwtAccessTokenAuthGuard from '../../guard/jwtAccessToken.guard';
 import ApiKeyAuthGuard from '../../guard/apiKey.guard';
 import CoreApiResponse from '../../common/apiResponse/coreResponse';
 import { Todo } from '../todos/entities';
 import { TodoListPagination } from './interface/response/TodoListPagination';
-import { PAGINATION_PAGE, PAGINATION_SIZE } from '../../constants/pagination';
+import {
+  PAGINATION_PAGE,
+  PAGINATION_SIZE,
+} from '../../common/constants/pagination';
+import { API_KEY_HEADER } from 'src/common/constants/apiKey';
 import { UpdateTodoPayload } from './interface/payload/updateTodo.payload';
+import MessageApiResponse from '../../common/apiResponse/messageApiResponse';
+import {
+  TodoResponse,
+  ListTodoPaginationResponse,
+} from './documentation/response';
 
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAccessTokenAuthGuard)
 @UseGuards(ApiKeyAuthGuard)
 @Controller('todos')
+@ApiTags('Todos')
+@ApiBearerAuth()
+@ApiSecurity(API_KEY_HEADER, [API_KEY_HEADER])
 export class TodosController {
   constructor(private readonly todosService: TodosService) {}
 
   @Post()
   @HttpCode(HttpStatus.OK)
+  @ApiResponse({ status: HttpStatus.OK, type: TodoResponse })
   public async create(
     @HttpUser() user: UserPayload,
     @Body() createTodoDto: TodoDto,
@@ -43,6 +63,7 @@ export class TodosController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
+  @ApiResponse({ status: HttpStatus.OK, type: ListTodoPaginationResponse })
   public async getList(
     @HttpUser() user: UserPayload,
     @Query() pagination: PaginationParam,
@@ -59,6 +80,7 @@ export class TodosController {
 
   @Get(':todoId')
   @HttpCode(HttpStatus.OK)
+  @ApiResponse({ status: HttpStatus.OK, type: TodoResponse })
   public async detail(
     @HttpUser() user: UserPayload,
     @Param('todoId') todoId: string,
@@ -84,11 +106,14 @@ export class TodosController {
   }
 
   @Delete(':todoId')
+  @ApiResponse({ status: HttpStatus.OK, type: MessageApiResponse })
   public async deleteTodoById(
     @Param('todoId') todoId: string,
     @HttpUser() user: UserPayload,
-  ): Promise<{ message: string }> {
+  ): Promise<MessageApiResponse> {
     await this.todosService.remove(todoId, user);
-    return CoreApiResponse.success('Remove Successfull');
+    return CoreApiResponse.success({
+      description: 'Remove Successfull',
+    });
   }
 }

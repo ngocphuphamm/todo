@@ -1,15 +1,9 @@
-import {
-  Entity,
-  Column,
-  PrimaryColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Entity, Column, PrimaryColumn, BaseEntity } from 'typeorm';
 
 import { Permissions, StatusKey } from '../../../enums/apiKey.enum';
 
 @Entity('apiKeys')
-export default class ApiKey {
+export default class ApiKey extends BaseEntity {
   @PrimaryColumn({ length: 36 })
   id: string;
 
@@ -27,10 +21,4 @@ export default class ApiKey {
 
   @Column({ type: 'enum', enum: StatusKey })
   status: StatusKey;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 }

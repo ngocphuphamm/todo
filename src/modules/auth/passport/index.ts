@@ -1,4 +1,10 @@
-import JwtStrategy from './jwt.strategy';
+import JwtAccessTokenStrategy from './jwtAccessToken.strategy';
 import LocalStrategy from './local.strategy';
 import ApiKeyStrategy from './apiKey.strategy';
-export { JwtStrategy, LocalStrategy, ApiKeyStrategy };
+import JwtRefreshTokenStrategy from './jwtRefreshToken.strategy';
+export {
+  JwtAccessTokenStrategy,
+  LocalStrategy,
+  ApiKeyStrategy,
+  JwtRefreshTokenStrategy,
+};

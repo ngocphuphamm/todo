@@ -3,5 +3,5 @@ import { Todo } from '../../entities';
 export interface TodoListPagination {
   pagination: PaginationParam;
 
-  listToDo: Todo[];
+  listTodo: Todo[];
 }

@@ -7,7 +7,7 @@ import User from '../../auth/entities/user.entity';
 import { TodoStatus, TodoPriority } from '../../../enums/todo.enum';
 import { Pagination } from '../../../common/types';
 import helper from '../../../common/utils/helper';
-import { UserPayload } from '../../auth/interface/payloads/user.payload';
+import { UserPayload } from '../../auth/interfaces/payloads/user.payload';
 import { TodoDto } from '../dto';
 import { UpdateTodoPayload } from '../interface/payload/updateTodo.payload';
 

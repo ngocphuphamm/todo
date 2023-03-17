@@ -1,4 +1,4 @@
-import { RequestWithUser } from '../modules/auth/interface/requests/requestUser.request';
+import { RequestWithUser } from '../modules/auth/interfaces/requests/requestUser.request';
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
