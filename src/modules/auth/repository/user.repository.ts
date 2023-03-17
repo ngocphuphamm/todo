@@ -5,7 +5,7 @@ import { v4 } from 'uuid';
 import { User } from '../entities';
 import { RepositoryFindOptions } from '../../../common/repositoryOptions';
 import { Optional } from '../../../common/types';
-import CreateUserDto from '../dto/createUser.dto';
+import CreateUserDto from '../dtos/createUser.dto';
 
 export default class UserRepository extends Repository<User> {
   private readonly userAlias: string = 'user';

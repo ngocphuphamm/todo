@@ -1,7 +1,7 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { User, ApiKey } from '../modules/auth/entities';
 import { Todo } from '../modules/todos/entities';
-Todo;
+
 const TypeOrmConfig: TypeOrmModuleOptions = {
   type: 'mysql',
   host: process.env.DB_HOST,

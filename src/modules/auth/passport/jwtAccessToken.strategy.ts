@@ -3,8 +3,8 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
 import { AuthService } from '../auth.service';
-import { JwtPayload } from '../interface/payloads/jwt.payload';
-import { UserPayload } from '../interface/payloads/user.payload';
+import { JwtPayload } from '../interfaces/payloads/jwt.payload';
+import { UserPayload } from '../interfaces/payloads/user.payload';
 import { Code } from '../../../common/code';
 import { Exception } from '../../../common/exception';
 import { CoreAssert } from '../../../common/utils/assert';
@@ -12,7 +12,7 @@ import { User } from '../entities';
 import { ApiConfig } from '../../../config';
 
 @Injectable()
-export default class JwtStrategy extends PassportStrategy(Strategy) {
+export default class JwtAccessTokenStrategy extends PassportStrategy(Strategy) {
   constructor(private authService: AuthService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
