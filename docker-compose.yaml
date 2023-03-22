@@ -11,7 +11,6 @@ services:
       - redis
     environment:
       - DB_HOST=db
-      - REDIS_HOST=redis
   db:
     image: mysql:5.7
     environment:
@@ -21,8 +20,3 @@ services:
       - "13306:3306"
     volumes:
       - ./db_data:/var/lib/mysql
-  redis:
-    image: redis:latest
-    command: redis-server --requirepass YX4DGATNW/1oxhBSN+2svARAoRMC8VZCT0ODH9vt3VZxbIEyiAnR54MYWbBVtgGkf/HgFhTRTB5byv1a
-    ports:
-      - "6379:6379"
