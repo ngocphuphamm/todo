@@ -8,7 +8,6 @@ services:
       - "3002:3002"
     depends_on:
       - db
-      - redis
     environment:
       - DB_HOST=db
   db:
