@@ -1,8 +1,28 @@
-version: '3'
+version: "3"
 services:
-  app:
-    build: .
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - '3002:3002'
+      - "3000:3000"
+    depends_on:
+      - db
+      - redis
     environment:
-      NODE_ENV: production
+      - DB_HOST=db
+      - REDIS_HOST=redis
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456@
+      MYSQL_DATABASE: todolist
+    ports:
+      - "13306:3306"
+    volumes:
+      - ./db_data:/var/lib/mysql
+  redis:
+    image: redis:latest
+    command: redis-server --requirepass YX4DGATNW/1oxhBSN+2svARAoRMC8VZCT0ODH9vt3VZxbIEyiAnR54MYWbBVtgGkf/HgFhTRTB5byv1a
+    ports:
+      - "6379:6379"
