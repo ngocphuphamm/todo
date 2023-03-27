@@ -1,5 +1,25 @@
 pipeline{
-
+    agent{
+        label "node"
+    }
+    stages{
+        stage("A"){
+            steps{
+                echo "========executing A========"
+            }
+            post{
+                always{
+                    echo "========always========"
+                }
+                success{
+                    echo "========A executed successfully========"
+                }
+                failure{
+                    echo "========A execution failed========"
+                }
+            }
+        }
+    }
     stages{
         stage("verify toolong"){
             steps{
@@ -8,6 +28,17 @@ pipeline{
                   docker-compose up -d --build
                 '''
             }
+        }
+    }
+    post{
+        always{
+            echo "========always========"
+        }
+        success{
+            echo "========pipeline executed successfully ========"
+        }
+        failure{
+            echo "========pipeline execution failed========"
         }
     }
 }
