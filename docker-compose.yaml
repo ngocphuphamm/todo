@@ -2,14 +2,17 @@ version: "3"
 services:
   api:
     build: .
+    env_file: .env
     ports:
-      - '3002:3002'
+      - '3001:3002'
     environment:
       DB_HOST: db
     depends_on:
       - db
+    restart: always
     networks:
       - internalnet
+
 
   db:
     image: mysql:8.0
@@ -30,7 +33,8 @@ services:
       - '3306'
       # Where our data will be persisted
     volumes:
-      - ./init:/docker-entrypoint-initdb.d
+      - ./dbinit:/docker-entrypoint-initdb.d/0_init.sql
+      - $HOME/database:/var/lib/mysql
     networks:
       - internalnet
 

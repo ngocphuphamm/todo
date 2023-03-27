@@ -32,7 +32,7 @@ export class ServerApplication {
     this.log();
     this.buildAPIDocumentation(app);
 
-    await app.listen(this.port, this.host);
+    await app.listen(this.port);
   }
 
   private buildAPIDocumentation(app: NestExpressApplication): void {
