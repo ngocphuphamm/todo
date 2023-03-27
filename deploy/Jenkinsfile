@@ -14,8 +14,8 @@ node {
     docker.withRegistry('https://index.docker.io/v2/', 'dockerhub') {
       def app = docker.image("ngocphupham/todolist:${commit_id}").push()
       sh "docker pull ngocphupham/todolist:${commit_id}"
-      sh 'docker ps -a | grep my-app && docker stop my-app && docker rm my-app || echo "No container found to stop"'
-      sh "docker run -d --name my-app -p 2003:2003 ngocphupham/todolist:${commit_id}"
+      sh 'docker ps -a | grep todo-list && docker stop my-app && docker rm my-app || echo "No container found to stop"'
+      sh "docker run -d --name todo-list -p 2003:2003 ngocphupham/todolist:${commit_id}"
     }
   }
 }
