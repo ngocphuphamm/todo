@@ -1,0 +1,21 @@
+node {
+   def commit_id
+   stage('Preparation') {
+     checkout scm
+     sh "git rev-parse --short HEAD > .git/commit-id"
+     commit_id = readFile('.git/commit-id').trim()
+   }
+   stage('docker build/push') {
+     docker.withRegistry('https://index.docker.io/v2/', 'dockerhub') {
+       def app = docker.build("ngocphupham/todolist:${commit_id}", '.').push()
+     }
+   }
+  stage('deploy'){
+    docker.withRegistry('https://index.docker.io/v2/', 'dockerhub') {
+      def app = docker.image("ngocphupham/todolist:${commit_id}").push()
+      sh "docker pull ngocphupham/todolist:${commit_id}"
+      sh 'docker ps -a | grep my-app && docker stop my-app && docker rm my-app || echo "No container found to stop"'
+      sh "docker run -d --name my-app -p 2003:2003 ngocphupham/todolist:${commit_id}"
+    }
+  }
+}

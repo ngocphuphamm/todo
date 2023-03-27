@@ -5,7 +5,10 @@ import { TodoDto, PaginationParam } from './dto';
 import { UserPayload } from '../auth/interfaces/payloads/user.payload';
 import TodoRepository from './repository/todo.repository';
 import { Todo } from './entities';
-import { PAGINATION_PAGE, PAGINATION_SIZE } from '../../common/constants/pagination';
+import {
+  PAGINATION_PAGE,
+  PAGINATION_SIZE,
+} from '../../common/constants/pagination';
 import { TodoListPagination } from './interface/response/TodoListPagination';
 import { CoreAssert } from '../../common/utils/assert';
 import { Exception } from '../../common/exception';
