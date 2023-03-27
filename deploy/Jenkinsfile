@@ -1,43 +1,40 @@
-pipeline{
-    agent{
+pipeline {
+  agent any
+  stages {
+    stage("A") {
+      steps {
+        echo "========executing A========"
+      }
+      post {
+        always {
+          echo "========always========"
+        }
+        success {
+          echo "========A executed successfully========"
+        }
+        failure {
+          echo "========A execution failed========"
+        }
+      }
     }
-    stages{
-        stage("A"){
-            steps{
-                echo "========executing A========"
-            }
-            post{
-                always{
-                    echo "========always========"
-                }
-                success{
-                    echo "========A executed successfully========"
-                }
-                failure{
-                    echo "========A execution failed========"
-                }
-            }
-        }
+    stage("verify toolong") {
+      steps {
+        sh '''
+          cd ..
+          docker-compose up -d --build
+        '''
+      }
     }
-    stages{
-        stage("verify toolong"){
-            steps{
-                sh '''
-                  cd ..
-                  docker-compose up -d --build
-                '''
-            }
-        }
+  }
+  post {
+    always {
+      echo "========always========"
     }
-    post{
-        always{
-            echo "========always========"
-        }
-        success{
-            echo "========pipeline executed successfully ========"
-        }
-        failure{
-            echo "========pipeline execution failed========"
-        }
+    success {
+      echo "========pipeline executed successfully ========"
     }
+    failure {
+      echo "========pipeline execution failed========"
+    }
+  }
 }
