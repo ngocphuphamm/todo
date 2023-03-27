@@ -58,7 +58,7 @@ REFERENCES users(id);
 
 
 
-INSERT INTO apiKeys (id, keyValue, version, permissions, comments, status) 
+INSERT INTO apiKeys (id, keyValue, version, permissions, comments, status)
 VALUES (UUID(),'GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj', '1.0.0', 'general', 'To be used by the high3ar.club vendor', 'active');
 
 
