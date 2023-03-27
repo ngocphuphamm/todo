@@ -1,15 +1,13 @@
-node {
-   def commit_id
-   stage('Preparation') {
-     checkout scm
-     sh "git rev-parse --short HEAD > .git/commit-id"
-     commit_id = readFile('.git/commit-id').trim()
-   }
-  stage('deploy'){
-    steps {
-      dir('/home/devops/todo') {
-        sh 'git pull'
-      }
+pipeline{
+
+    stages{
+        stage("verify toolong"){
+            steps{
+                sh '''
+                  cd ..
+                  docker-compose up -d --build
+                '''
+            }
+        }
     }
-  }
 }
