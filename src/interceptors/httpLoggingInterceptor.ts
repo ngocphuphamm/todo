@@ -24,7 +24,7 @@ export default class HttpLoggingInterceptor implements NestInterceptor {
         const requestFinishDate: number = Date.now();
 
         const message: string =
-          `Method: ${request.method}; ` +
+          `Methodd: ${request.method}; ` +
           `Path: ${request.path}; ` +
           `SpentTime: ${requestFinishDate - requestStartDate}ms`;
 
