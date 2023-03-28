@@ -31,7 +31,6 @@ export class ServerApplication {
     app.use(compression());
     this.log();
     this.buildAPIDocumentation(app);
-
     await app.listen(this.port);
   }
 

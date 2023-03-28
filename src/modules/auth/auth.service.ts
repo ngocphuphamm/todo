@@ -1,10 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
-import {
-  RedisService,
-  DEFAULT_REDIS_NAMESPACE,
-} from '@liaoliaots/nestjs-redis';
+import { RedisService } from '@liaoliaots/nestjs-redis';
 import Redis from 'ioredis';
 
 import { CreateUserDto } from './dtos';
@@ -19,7 +16,7 @@ import { UserPayload } from './interfaces/payloads/user.payload';
 import { LoggedInUser } from './interfaces/payloads/user.payload';
 import { TIME_TO_LIVE_REDIS } from '../../common/constants/redis';
 import { ApiKey } from './entities';
-import { ApiConfig } from 'src/config';
+import { ApiConfig } from '../../config';
 
 @Injectable()
 export class AuthService {

@@ -35,6 +35,7 @@ if (ApiConfig.LOG_ENABLE) {
     useClass: HttpLoggingInterceptor,
   });
 }
+import 'dotenv/config';
 
 @Global()
 @Module({

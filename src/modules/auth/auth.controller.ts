@@ -23,9 +23,13 @@ import { CreateUserDto } from './dtos';
 import { RequestWithUser } from './interfaces/requests/requestUser.request';
 import { LoggedInUser } from './interfaces/payloads/user.payload';
 import { RefreshTokenDto } from './dtos';
-import { JwtAccessTokenAuthGuard, ApiKeyAuthGuard, LocalAuthGuard } from '../../guard';
+import {
+  JwtAccessTokenAuthGuard,
+  ApiKeyAuthGuard,
+  LocalAuthGuard,
+} from '../../guard';
 import { JwtPayload } from './interfaces/payloads/jwt.payload';
-import { API_KEY_HEADER } from 'src/common/constants/apiKey';
+import { API_KEY_HEADER } from '../../common/constants/apiKey';
 import {
   RegisterResponse,
   TokenResponse,

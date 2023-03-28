@@ -27,7 +27,6 @@ export default class TodoRepository extends Repository<Todo> {
     todo.createdAt = new Date();
     todo.updatedAt = new Date();
     await todo.save();
-
     return todo;
   }
 

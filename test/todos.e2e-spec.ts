@@ -4,7 +4,7 @@ import * as request from 'supertest';
 import { RootModule } from '../src/loaders/moduleLoad/root.module';
 import 'dotenv/config';
 
-describe('AppController (e2e)', () => {
+describe('TodosController (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
