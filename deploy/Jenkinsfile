@@ -23,7 +23,7 @@ node {
       def app = docker.image("ngocphupham/todolist:${commit_id}").push()
       sh "docker pull ngocphupham/todolist:${commit_id}"
       sh 'docker ps -a | grep my-todo && docker stop my-todo && docker rm my-todo || echo "No container found to stop"'
-      sh "docker run -d --name my-todo -p 3001:3002 ngocphupham/todolist:${commit_id} --network todolist"
+      sh "docker run -d --name my-todo -p 3001:3002 ngocphupham/todolist:${commit_id}"
     }
   }
 }
