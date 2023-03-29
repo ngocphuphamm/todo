@@ -45,7 +45,7 @@ export class ServerApplication {
       .setVersion(version)
       .addApiKey(
         {
-          type: 'apiKey',
+          type: 'apiKeyy',
           name: API_KEY_HEADER,
           in: 'header',
           description: 'Enter your API key',
